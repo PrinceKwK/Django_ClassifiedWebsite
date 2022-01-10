@@ -1,0 +1,70 @@
+{% extends "shop/base.html" %}  
+{% load static %}
+{% block content %}
+
+   <header class="bg-primary py-5">
+    <div class="container px-4 px-lg-5 my-5">
+        <div class="text-center text-white">
+            <h1 class="display-4 fw-bolder">NileConnects</h1>
+            <p class="lead fw-normal text-white-50 mb-0">The best classified Website in your area</p>
+            
+            <div class="d-flex justify-content-center ml-6">
+                <form class="row gx-3 gy-2 align-items-center " method=POST action="{% url 'search_venues' %}">
+                    {% csrf_token %}
+                    <div class="col-sm-3">
+                    
+                    <input name="searched" type="text" class="form-control" id="specificSizeInputName" placeholder="&#xF002; Search" style="font-family:Arial, FontAwesome" /> 
+                    </div>
+                    <div class="col-sm-3">
+
+                    <div class="input-group">
+                        <input name="location" type="text" class="form-control" id="specificSizeInputGroupUsername" placeholder="&#xf041; located at..." style="font-family:Arial, FontAwesome">
+                    </div>
+                    </div>
+                    <div class="col-sm-3">
+                    <label class="visually-hidden" for="specificSizeSelect">Preference</label>
+                    <select class="form-select" id="specificSizeSelect">
+                        <option selected>Category</option>
+                        {% for category in categories %}
+                        <option value="1">{{ category }}</option>
+                        {% endfor %}
+                    </select>
+                    </div>
+                    <div class="col-auto">
+                    <button type="submit" class="btn btn-success">Submit</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</header> 
+<!-- ======= Header ======= -->
+
+<!-- Content-->
+<section class="py-5">
+        <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            {% for item in items %}
+            {% if forloop.first %}<div class="row">{% endif %}
+                <a href="{% url 'detail' item.id %}" class="card-title text-truncate text-decoration-none">
+                <div class="card mx-3 my-3" style="width: 18rem;">
+                    <img src="https://mdbcdn.b-cdn.net/img/Photos/Lightbox/Original/img%20(112).webp" class="card-img-top" alt="...">
+                    <div class="card-body">
+                     <h3 class="card-title text-truncate">{{ item.title }}</h3> 
+                      <p class="card-text description text-truncate">{{ item.description }}</p>
+                      <p class="text-success">{{ item.price }}$</p> 
+                    </div>
+                    <p> {{ item.published_date }} </p>
+                  </div> 
+                  </a>
+            {% if forloop.counter|divisibleby:3 %}</div><div class="row">{% endif %}
+            {% if forloop.last %}</div>{% endif %}
+        {% endfor %}
+        </div>
+   
+</section>
+
+   
+    
+<!-- end content -->
+
+{% endblock %}
