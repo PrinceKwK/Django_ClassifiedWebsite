@@ -12,16 +12,24 @@ from django.views.generic import ListView,DetailView
 #list view for the home page 
 class PostListView(ListView):
    model= Post
-   template = 'shop/index.html'
+   template = 'shop/post_list.html'
    context_object_name = 'items'  
    ordering = ['published_date']
 
 
-#the same thig but with method 
-def index(request):
+   # return the context of all the categories for the banner.
+   def get_context_data(self, **kwargs):
+          context = super().get_context_data(**kwargs)
+          context['categories'] = Categories.objects.all()
+          return context
+
+#list view for the home page (not using class based view)
+'''def index(request):
    context = Categories.objects.all()
    items = Post.objects.all()
-   return render(request,'shop/home.html',{'categories': context,'items' : items })
+   return render(request,'shop/home.html',{'categories': context,'items' : items })'''
+
+
 
 
 
@@ -29,6 +37,9 @@ class PostDetailView(DetailView):
    model = Post
    template = 'shop/detail.html'
    context_object_name = 'post'
+
+          
+   
 
 
 def privacy_policy(request):
@@ -53,6 +64,7 @@ def search_venues(request):
    else:
       return render(request,'shop/search_venues.html')
    
+
 @login_required
 def post_ad(request):
    return render(request,'shop/post_ad.html')

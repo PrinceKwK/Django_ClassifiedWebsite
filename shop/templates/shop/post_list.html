@@ -42,7 +42,9 @@
 
 <!-- Content-->
 <section class="py-5">
+    <h1 class="justify-content-center">latest ads</h1>
         <div class="row gx-4 gx-lg-5 row-cols-2 row-cols-md-3 row-cols-xl-4 justify-content-center">
+            
             {% for item in items %}
             {% if forloop.first %}<div class="row">{% endif %}
                 <a href="{% url 'detail' item.id %}" class="card-title text-truncate text-decoration-none">
@@ -59,6 +61,7 @@
             {% if forloop.counter|divisibleby:3 %}</div><div class="row">{% endif %}
             {% if forloop.last %}</div>{% endif %}
         {% endfor %}
+        
         </div>
    
 </section>

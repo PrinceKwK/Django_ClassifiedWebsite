@@ -13,9 +13,14 @@ from django.utils import timezone
 class Categories(models.Model):
     category_name = models.CharField(max_length=80)
     category_description = models.CharField(max_length=200,blank=True)
-
+    
     def __str__(self):
         return self.category_name
+
+
+
+
+
 
 
 #all the actual items under the categories
